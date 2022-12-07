@@ -156,33 +156,6 @@ for nD = 1 : length(direcBrain)
         mapScale = str2double(vmu{1}{mapScaleDims(1)}(mapScaleLoc+1:end));
         
         
-        %% open and read calibration file
-        % % %         fid = fopen([dirBrain dirName1 fname_cal],'r');
-        % % %         calib = textscan(fid,'%s');
-        % % %         fclose(fid);
-        
-        % % %         %% parse calib text
-        % % %         clear RPM startX startY endX endY barcodeSeps barcodeDimsString
-        % % %         isbarcodeDims = strfind(calib{1},'roi.barcode.macro');
-        % % %         barcodeDims = find(~(cellfun('isempty',isbarcodeDims)));
-        % % %         barcodeDimStart = strfind(calib{1}{barcodeDims},'=');
-        % % %         barcodeDimsString = calib{1}{barcodeDims}(barcodeDimStart+1:end);
-        % % %         barcodeSeps = strsplit(barcodeDimsString, ',');
-        % % %
-        % % %
-        % % %         %% Input Reading Complete......
-        % % %         %% -----------------------------------------
-        % % %
-        % % %         %% read barcode and tissue ROI
-        % % %
-        % % %         offsetX = str2double(barcodeSeps{3}) - str2double(barcodeSeps{1}) + 1;
-        % % %         offsetY = inf;
-        % % %         offsetXend = 0;
-        % % %         offsetYend = 0;
-        % % %
-        % % %         barcodeImg = macro(:, 1:offsetX-1,:);
-        % % %         nobarcodeSlide = macro(:, offsetX:end,:);
-        
         %% Calculate correspondence between Macro and NGR image
         
         macroPixelResX = (PhysicalMacroWidth/PixelMacroWidth);
@@ -212,31 +185,6 @@ for nD = 1 : length(direcBrain)
         offsetY = corrCentreNGRY - (ngrCenterY/samplingRatioNGR2macroY);
         offsetXend = corrCentreNGRX + (ngrCenterX/samplingRatioNGR2macroX);
         offsetYend = corrCentreNGRY + (ngrCenterY/samplingRatioNGR2macroY);
-        
-        % % % % % % % % %         macroCenterXp = PhysicalMacroWidth/2;
-        % % % % % % % % %         macroCenterYp = PhysicalMacroHeight/2;
-        % % % % % % % % %         ngrCenterXp = PhysicalWidth/2;
-        % % % % % % % % %         ngrCenterYp = PhysicalHeight/2;
-        % % % % % % % % %         mapCenterXp = ngrCenterXp/mapScale;
-        % % % % % % % % %         mapCenterYp = ngrCenterYp/mapScale;
-        % % % % % % % % %
-        % % % % % % % % %         corrCentreNGRXp = macroCenterXp + XoffsetFromSlideCentre;
-        % % % % % % % % %         corrCentreNGRYp = macroCenterYp + YoffsetFromSlideCentre;
-        % % % % % % % % %
-        % % % % % % % % %         offsetXp = corrCentreNGRXp - (ngrCenterXp/samplingRatioNGR2macroX);
-        % % % % % % % % %         offsetYp = corrCentreNGRYp - (ngrCenterYp/samplingRatioNGR2macroY);
-        % % % % % % % % %         offsetXendp = corrCentreNGRXp + (ngrCenterXp/samplingRatioNGR2macro);
-        % % % % % % % % %         offsetYendp = corrCentreNGRYp + (ngrCenterYp/samplingRatioNGR2macro);
-        % % % % % % % % %
-        % % % % % % % % %
-        % % % % % % % % %
-        % % % % % % % % %         posXp = corrCentreNGRXp / PhysicalMacroWidth;
-        % % % % % % % % %         posYp = corrCentreNGRYp / PhysicalMacroHeight;
-        % % % % % % % % %         posOXp = offsetXp / PhysicalMacroWidth;
-        % % % % % % % % %         posOYp = offsetYp / PhysicalMacroHeight;
-        % % % % % % % % %         posOXEp = offsetXendp / PhysicalMacroWidth;
-        % % % % % % % % %         posOYEp = offsetYendp / PhysicalMacroHeight;
-        %
         currImg = macro(round(offsetY):round(offsetYend), ...
             round(offsetX)+10: round(offsetXend)+10,:);
         
@@ -301,6 +249,8 @@ for nD = 1 : length(direcBrain)
         else
             endCounter = 4;
         end
+        
+        
         for i = 1:endCounter
             startX(i) = max((startX(i)-offsetX)/offsetW,0);
             startY(i) = max((startY(i)-offsetY)/offsetH,0);

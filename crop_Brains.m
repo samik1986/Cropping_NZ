@@ -6,11 +6,13 @@
 % Run crop_logs.m after this to get the duplicate and missing sections
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function crop_Brains(nz, brainID, prefix, spec)
+function crop_Brains(nz, brainID, prefix, spec, start)
     %     nz = 1;
     %     brainID = 'PMD3897&3898';
     %     prefix = 'PMD'
     %     spec = 'Mouse2';
+%     %     if start
+    %         start = 1;
     %% 3 sections/slide; 1 brain/slide
     if strcmp(spec, 'Mouse1')        
         crop_mouse_single(nz, brainID, prefix);
@@ -27,5 +29,16 @@ function crop_Brains(nz, brainID, prefix, spec)
     if strcmp(spec, 'Sagittal')
         crop_sagital_quad(nz, brainID, prefix);
     end
+    
+    %% Heterogeous mix of Sections (needs CSV I/P)
+    if strcmp(spec, 'List')
+        crop_list(nz, brainID, prefix);
+    end
+    
+    %% For Rescans (needs CSV I/P)
+    if strcmp(spec, 'ReScan')
+        crop_list_rescan(nz, brainID, prefix);
+    end
+    
     
 end
