@@ -21,6 +21,10 @@ function crop_Brains(nz, brainID, prefix, spec, start)
     if strcmp(spec, 'Mouse2')
         crop_mouse_double(nz, brainID, prefix);
     end
+    %% 6 sections/slide; 2 brains/slide but Inverted Clubbed ID
+    if strcmp(spec, 'Mouse2i')
+        crop_mouse_double_inv(nz, brainID, prefix);
+    end
     %% 2 sections/slide; 1 brain/slide
     if strcmp(spec, 'Marmoset')
         crop_marmoset(nz, brainID, prefix);
